@@ -1,22 +1,16 @@
-﻿using Domain.Entities;
-using Infrastructure.Repositories;
+﻿using Application.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AssetController(AssetRepository repository) : ControllerBase
+public class AssetController() : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> AddAsset()
+    public async Task<IActionResult> GetAllAssetsAsync([FromServices] ICoinloreService coinloreService)
     {
-        var asset = new AssetEntity
-        {
-            Name = "Test Asset",
-        };
-        
-        await repository.AddAsync(asset);
-        return Ok();
+        var assets = await coinloreService.GetAllCryptoAssetsAsync();
+        return Ok(assets);
     }
 }

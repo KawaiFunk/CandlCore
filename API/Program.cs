@@ -1,6 +1,11 @@
+using Application.Interfaces.Clients.Coinlore;
+using Application.Interfaces.Services;
+using Common.Constants;
+using Infrastructure.Clients.Coinlore;
 using Infrastructure.Configurations;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +21,16 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<MongoDbSettings>(
     builder.Configuration.GetSection("MongoDbSettings"));
+builder.Services.Configure<CoinloreOptions>(
+    builder.Configuration.GetSection("Coinlore"));
 
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<AssetRepository>();
-
+builder.Services.AddHttpClient("CoinloreClient");
+builder.Services.AddSingleton<ICoinloreHttpClientFactory, CoinloreHttpClientFactory>();
+builder.Services.AddScoped<ICoinloreClient, CoinloreClient>();
+builder.Services.AddScoped<ICoinloreUrlBuilder, CoinloreUrlBuilder>();
+builder.Services.AddScoped<ICoinloreService, CoinloreService>();
 
 var app = builder.Build();
 

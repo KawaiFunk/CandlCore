@@ -1,18 +1,8 @@
-﻿using Domain.Entities;
-using Infrastructure.Data;
-using MongoDB.Driver;
+﻿using Domain.Interfaces.Repositories;
 
 namespace Infrastructure.Repositories;
 
-public class AssetRepository
+public class AssetRepository : IAssetRepository
 {
-    private readonly IMongoCollection<AssetEntity> _collection;
-
-    public AssetRepository(MongoDbContext context)
-    {
-        _collection = context.GetCollection<AssetEntity>(nameof(AssetEntity));
-    }
-
-    public async Task AddAsync(AssetEntity asset) => 
-        await _collection.InsertOneAsync(asset); 
+    
 }
