@@ -1,7 +1,6 @@
-﻿using Application.DTOs.Assets;
-using Application.Interfaces.Clients.Coinlore;
+﻿using Application.Interfaces.Clients.Coinlore;
 using Application.Interfaces.Services;
-using Infrastructure.Clients.Coinlore;
+using Application.Models.Assets;
 
 namespace Infrastructure.Services;
 
@@ -21,7 +20,7 @@ public class CoinloreService : ICoinloreService
         {
             return assets.Data;
         }
-        
+
         throw new Exception("Failed to retrieve assets from Coinlore API.");
     }
 }

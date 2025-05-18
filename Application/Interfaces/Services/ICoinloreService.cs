@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Assets;
+﻿using Application.Models.Assets;
 
 namespace Application.Interfaces.Services;
 

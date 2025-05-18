@@ -10,4 +10,15 @@
       <Folder Include="Helpers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Hangfire" Version="1.8.20" />
+      <PackageReference Include="Hangfire.AspNetCore" Version="1.8.20" />
+      <PackageReference Include="Hangfire.Core" Version="1.8.20" />
+      <PackageReference Include="Hangfire.Mongo" Version="1.11.6" />
+      <PackageReference Include="Hangfire.NetCore" Version="1.8.20" />
+      <PackageReference Include="Hangfire.SqlServer" Version="1.8.20" />
+      <PackageReference Include="Serilog" Version="4.2.0" />
+      <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    </ItemGroup>
+
 </Project>

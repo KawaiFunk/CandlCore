@@ -8,8 +8,8 @@ namespace Infrastructure.Clients.Coinlore;
 public class CoinloreUrlBuilder : ICoinloreUrlBuilder
 {
     private readonly IOptions<CoinloreOptions> _options;
-    private readonly StringBuilder _builder = new();
-    private bool _hasQueryStarted = false;
+    private readonly StringBuilder             _builder         = new();
+    private          bool                      _hasQueryStarted = false;
 
     public CoinloreUrlBuilder(IOptions<CoinloreOptions> options)
     {

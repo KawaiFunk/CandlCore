@@ -1,40 +1,45 @@
 using Application.Interfaces.Clients.Coinlore;
 using Application.Interfaces.Services;
 using Common.Constants;
+using Hangfire;
+using Hangfire.Mongo;
+using Hangfire.Mongo.Migration.Strategies;
+using Hangfire.Mongo.Migration.Strategies.Backup;
 using Infrastructure.Clients.Coinlore;
 using Infrastructure.Configurations;
+using Infrastructure.Configurations.ServiceRegistrations;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-// Add Swagger
+//Hangfire
+builder.Services.AddHangfireServices(builder.Configuration);
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.Configure<MongoDbSettings>(
-    builder.Configuration.GetSection("MongoDbSettings"));
-builder.Services.Configure<CoinloreOptions>(
-    builder.Configuration.GetSection("Coinlore"));
+//Serilog
+SerilogConfiguration.AddSerilogConfiguration(builder.Configuration);
+//MongoDb
+builder.Services.AddMongoDbConfiguration(builder.Configuration);
+//Options
+builder.Services.AddOptionsConfiguration(builder.Configuration);
+//Services
+builder.Services.AddServicesConfiguration();
+//Repositories
+builder.Services.AddRepositoriesConfiguration();
 
-builder.Services.AddSingleton<MongoDbContext>();
-builder.Services.AddScoped<AssetRepository>();
-builder.Services.AddHttpClient("CoinloreClient");
-builder.Services.AddSingleton<ICoinloreHttpClientFactory, CoinloreHttpClientFactory>();
-builder.Services.AddScoped<ICoinloreClient, CoinloreClient>();
-builder.Services.AddScoped<ICoinloreUrlBuilder, CoinloreUrlBuilder>();
-builder.Services.AddScoped<ICoinloreService, CoinloreService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

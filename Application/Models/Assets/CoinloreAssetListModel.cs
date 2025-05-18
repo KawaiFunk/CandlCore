@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Application.DTOs.Assets;
 
 namespace Application.Models.Assets;
 
