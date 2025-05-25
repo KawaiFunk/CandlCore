@@ -39,11 +39,11 @@ public class CoinloreClient : ICoinloreClient
 
             var requestUrl = _coinloreUrlBuilder
                 .UseAllCoinsEndpoint()
-                .AddStart(0)
+                .AddStart(startIndex)
                 .AddLimit(_options.Value.Limit)
                 .Build();
 
-            var response = httpClient.GetAsync(requestUrl).Result;
+            var response = await httpClient.GetAsync(requestUrl);
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();

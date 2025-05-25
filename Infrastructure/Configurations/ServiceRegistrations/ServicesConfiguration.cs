@@ -15,6 +15,6 @@ public static class ServicesConfiguration
         services.AddSingleton<ICoinloreHttpClientFactory, CoinloreHttpClientFactory>();
         services.AddScoped<ICoinloreClient, CoinloreClient>();
         services.AddScoped<ICoinloreUrlBuilder, CoinloreUrlBuilder>();
-        services.AddScoped<ICoinloreService, CoinloreService>();
+        services.AddScoped<IAssetService, AssetService>();
     }
 }

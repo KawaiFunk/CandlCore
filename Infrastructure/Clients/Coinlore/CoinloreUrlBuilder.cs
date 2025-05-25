@@ -19,14 +19,16 @@ public class CoinloreUrlBuilder : ICoinloreUrlBuilder
     public ICoinloreUrlBuilder UseAllCoinsEndpoint()
     {
         _builder.Clear();
+        _hasQueryStarted = false;
         _builder.Append(_options.Value.BaseUrl);
         _builder.Append(_options.Value.AllCoinsUrl);
         return this;
     }
-
+    
     public ICoinloreUrlBuilder UseSingleCoinEndpoint()
     {
         _builder.Clear();
+        _hasQueryStarted = false;
         _builder.Append(_options.Value.BaseUrl);
         _builder.Append(_options.Value.SingleCoinUrl);
         return this;

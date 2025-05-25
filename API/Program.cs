@@ -1,3 +1,4 @@
+using Application.Configurations;
 using Application.Interfaces.Clients.Coinlore;
 using Application.Interfaces.Services;
 using Common.Constants;
@@ -5,6 +6,7 @@ using Hangfire;
 using Hangfire.Mongo;
 using Hangfire.Mongo.Migration.Strategies;
 using Hangfire.Mongo.Migration.Strategies.Backup;
+using Infrastructure.BackgroundJobs;
 using Infrastructure.Clients.Coinlore;
 using Infrastructure.Configurations;
 using Infrastructure.Configurations.ServiceRegistrations;
@@ -36,9 +38,21 @@ builder.Services.AddOptionsConfiguration(builder.Configuration);
 builder.Services.AddServicesConfiguration();
 //Repositories
 builder.Services.AddRepositoriesConfiguration();
+//Jobs
+builder.Services.AddJobsConfiguration();
+//Mappers
+builder.Services.AddMappersConfiguration();
 
 
 var app = builder.Build();
+
+//Add hangfire jobs
+using (var scope = app.Services.CreateScope())
+{
+    BackgroundJobsConfiguration.ConfigureJobs(scope.ServiceProvider);
+}
+
+app.UseHangfireDashboard();
 
 if (app.Environment.IsDevelopment())
 {

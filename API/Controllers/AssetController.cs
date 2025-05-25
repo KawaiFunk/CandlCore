@@ -7,10 +7,4 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class AssetController() : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetAllAssetsAsync([FromServices] ICoinloreService coinloreService)
-    {
-        var assets = await coinloreService.GetAllCryptoAssetsAsync();
-        return Ok(assets);
-    }
 }

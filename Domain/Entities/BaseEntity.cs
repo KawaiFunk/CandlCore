@@ -1,6 +1,10 @@
-﻿namespace Domain.Entities;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Domain.Entities;
 
 public class BaseEntity
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
+    [BsonId]
+    public ObjectId Id { get; set; }
 }

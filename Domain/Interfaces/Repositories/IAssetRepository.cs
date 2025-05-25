@@ -1,6 +1,9 @@
-﻿namespace Domain.Interfaces.Repositories;
+﻿using Domain.Entities;
+using Domain.Interfaces.Repositories.Generic;
 
-public interface IAssetRepository
+namespace Domain.Interfaces.Repositories;
+
+public interface IAssetRepository : IGenericRepository<AssetEntity>
 {
-    //TODO Create the methods to be implemented by the repository + base repository
+    Task<AssetEntity> GetByExternalIdAsync(string externalId);
 }
