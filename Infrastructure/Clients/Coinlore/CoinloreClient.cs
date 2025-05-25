@@ -48,9 +48,10 @@ public class CoinloreClient : ICoinloreClient
 
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<CoinloreAssetListModel>(content,
-                new JsonSerializerOptions { 
-                    PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, 
-                    PropertyNameCaseInsensitive = true 
+                new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy        = JsonNamingPolicy.SnakeCaseLower,
+                    PropertyNameCaseInsensitive = true
                 }
             );
             if (result == null)
