@@ -28,6 +28,8 @@ builder.Services.AddHangfireServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//In memory cache
+builder.Services.AddMemoryCache();
 //Serilog
 SerilogConfiguration.AddSerilogConfiguration(builder.Configuration);
 //MongoDb

@@ -5,7 +5,7 @@ using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repositories.Generic;
 
-namespace Infrastructure.Services;
+namespace Infrastructure.Services.Asset;
 
 public class AssetService(
     IGenericRepository<AssetEntity> repository,
