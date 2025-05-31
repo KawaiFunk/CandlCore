@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Services;
+using Domain.Common.PagedList;
 using Domain.Entities;
 using Domain.Interfaces.Repositories.Generic;
 
@@ -18,9 +19,9 @@ public class GenericService<T> : IGenericService<T> where T : BaseEntity
         return await _repository.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<T>> GetAllAsync()
+    public async Task<IPagedList<T>> GetAllAsync(PagedListFilter filter)
     {
-        return await _repository.GetAllAsync();
+        return await _repository.GetAllAsync(filter);
     }
 
     public async Task AddAsync(T entity)

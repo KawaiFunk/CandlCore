@@ -30,6 +30,8 @@ public class CoinloreClient : ICoinloreClient
     {
         try
         {
+            _logger.LogInformation("Getting assets from index {Index}", startIndex);
+            
             var httpClient = _coinloreHttpClientFactory.GetCoinloreHttpClient();
             if (httpClient == null)
             {
@@ -40,7 +42,7 @@ public class CoinloreClient : ICoinloreClient
             var requestUrl = _coinloreUrlBuilder
                 .UseAllCoinsEndpoint()
                 .AddStart(startIndex)
-                .AddLimit(_options.Value.Limit)
+                .AddLimit(_options.Value.BatchSize)
                 .Build();
 
             var response = await httpClient.GetAsync(requestUrl);

@@ -5,7 +5,8 @@ namespace Application.Mappers.AssetProfile;
 
 public interface IAssetMapper
 {
-    AssetEntity        Map(CoinloreAssetModel model);
-    CoinloreAssetModel Map(AssetEntity        entity);
-    void               MapToExisting(AssetEntity    source, AssetEntity target);
+    AssetModel         Map(AssetEntity             entity);
+    AssetEntity        ToEntity(CoinloreAssetModel model);
+    CoinloreAssetModel ToCoinloreModel(AssetEntity entity);
+    void               MapToExisting(AssetEntity   source, AssetEntity target);
 }

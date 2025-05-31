@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Services;
 using Application.Mappers.AssetProfile;
+using Domain.Common.PagedList;
 using Domain.Entities;
 using Domain.Interfaces.Repositories;
 using Domain.Interfaces.Repositories.Generic;
@@ -28,5 +29,10 @@ public class AssetService(
             _mapper.MapToExisting(entity, existingAsset);
             await _assetRepository.UpdateAsync(existingAsset);
         }
+    }
+
+    public new async Task<IPagedList<AssetEntity>> GetAllAsync(PagedListFilter filter)
+    {
+        return await _assetRepository.GetAllAsync(filter);
     }
 }

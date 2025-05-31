@@ -5,7 +5,18 @@ namespace Application.Mappers.AssetProfile;
 
 public class AssetMapper : IAssetMapper
 {
-    public AssetEntity Map(CoinloreAssetModel model)
+    public AssetModel Map(AssetEntity entity)
+    {
+        return new AssetModel
+        {
+            Name            = entity.Name,
+            Symbol          = entity.Symbol,
+            PriceUsd        = entity.PriceUsd,
+            PercentChange1h = entity.PercentChange1h
+        };
+    }
+
+    public AssetEntity ToEntity(CoinloreAssetModel model)
     {
         return new AssetEntity
         {
@@ -23,7 +34,7 @@ public class AssetMapper : IAssetMapper
         };
     }
 
-    public CoinloreAssetModel Map(AssetEntity entity)
+    public CoinloreAssetModel ToCoinloreModel(AssetEntity entity)
     {
         return new CoinloreAssetModel
         {

@@ -42,6 +42,8 @@ builder.Services.AddRepositoriesConfiguration();
 builder.Services.AddJobsConfiguration();
 //Mappers
 builder.Services.AddMappersConfiguration();
+//Mediator
+builder.Services.AddMediatorConfiguration();
 
 
 var app = builder.Build();
