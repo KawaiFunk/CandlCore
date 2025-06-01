@@ -26,6 +26,11 @@ public class CacheAssetService : IAssetService
 
     public async Task<IPagedList<AssetEntity>> GetAllAsync(PagedListFilter filter)
     {
+        if (!string.IsNullOrEmpty(filter.Search) && !string.IsNullOrWhiteSpace(filter.SortBy))
+        {
+            return await _inner.GetAllAsync(filter);
+        }
+            
         var cacheKey = CacheKeyHelper.GetAllAssetsCacheKey(filter);
         if (!_cache.TryGetValue(cacheKey, out IPagedList<AssetEntity> result))
         {

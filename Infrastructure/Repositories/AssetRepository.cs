@@ -17,7 +17,18 @@ public class AssetRepository(MongoDbContext context) : GenericRepository<AssetEn
 
     public new async Task<IPagedList<AssetEntity>> GetAllAsync(PagedListFilter filter)
     {
-        var assetEntities = Table.Take(300);
-        return await assetEntities.ToPagedListAsync(filter);
+        var query = Table.Take(300);
+        
+        if (filter.Search != null)
+        {
+            query = query.Where(it => it.Name.ToLower().Contains(filter.Search.ToLower()));
+        }
+        
+        if (filter.Descending)
+        {
+            query = query.OrderByDescending(x => x.Id);
+        }
+        
+        return await query.ToPagedListAsync(filter);
     }
 }

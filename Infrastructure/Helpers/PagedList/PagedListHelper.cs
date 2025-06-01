@@ -12,11 +12,6 @@ public static class PagedListHelper
         var totalCount = await query.CountAsync();
         var totalPages = (int)Math.Ceiling(totalCount / (double)filter.PageSize);
 
-        if (filter.Descending)
-        {
-            query = query.OrderByDescending(x => x.Id);
-        }
-
         var data = await query
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
