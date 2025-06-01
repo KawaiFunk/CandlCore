@@ -40,4 +40,27 @@ public class AssetController : ControllerBase
             return BadRequest($"An error occurred: {ex.Message}");
         }
     }
+    
+    [HttpGet("{id:length(24)}")]
+    [ProducesResponseType(200, Type = typeof(AssetModel))]
+    [ProducesResponseType(404)]
+    public async Task<IActionResult> GetByIdAsync(string id)
+    {
+        try
+        {
+            var request = new GetAssetByIdRequest(id);
+            var response = await _mediator.SendAsync(request);
+        
+            if (response == null)
+            {
+                return NotFound($"Asset with ID {id} not found.");
+            }
+        
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"An error occurred: {ex.Message}");
+        }
+    }
 }

@@ -17,11 +17,18 @@ public class CacheAssetService : IAssetService
         _cache = cache;
     }
 
-    public async Task UpsertAsync(AssetEntity entity)
+    public async Task<AssetEntity> GetByIdAsync(string id)
     {
-        await _inner.UpsertAsync(entity);
-        _cache.Remove(CacheKeyHelper.GetAssetByIdCacheKey(entity.Id.ToString()));
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
+        var cacheKey = CacheKeyHelper.GetAssetByIdCacheKey(id);
+        if (!_cache.TryGetValue(cacheKey, out AssetEntity result))
+        {
+            result = await _inner.GetByIdAsync(id);
+            if (result != null)
+            {
+                _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
+            }
+        }
+        return result;
     }
 
     public async Task<IPagedList<AssetEntity>> GetAllAsync(PagedListFilter filter)
@@ -39,6 +46,13 @@ public class CacheAssetService : IAssetService
         }
 
         return result;
+    }
+
+    public async Task UpsertAsync(AssetEntity entity)
+    {
+        await _inner.UpsertAsync(entity);
+        _cache.Remove(CacheKeyHelper.GetAssetByIdCacheKey(entity.Id.ToString()));
+        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
     public async Task AddAsync(AssetEntity entity)
@@ -60,9 +74,8 @@ public class CacheAssetService : IAssetService
         _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
-    public Task<bool> ExistsAsync(string id) => _inner.ExistsAsync(id);
+    public Task<bool>        ExistsAsync(string  id) => _inner.ExistsAsync(id);
 
-    public Task<AssetEntity> GetByIdAsync(string id) => _inner.GetByIdAsync(id);
 
     public async Task UpdateAsync(AssetEntity entity)
     {
