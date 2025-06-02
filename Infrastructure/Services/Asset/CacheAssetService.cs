@@ -28,24 +28,14 @@ public class CacheAssetService : IAssetService
                 _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
             }
         }
+
         return result;
     }
 
     public async Task<IPagedList<AssetEntity>> GetAllAsync(PagedListFilter filter)
     {
-        if (!string.IsNullOrEmpty(filter.Search) && !string.IsNullOrWhiteSpace(filter.SortBy))
-        {
-            return await _inner.GetAllAsync(filter);
-        }
-            
-        var cacheKey = CacheKeyHelper.GetAllAssetsCacheKey(filter);
-        if (!_cache.TryGetValue(cacheKey, out IPagedList<AssetEntity> result))
-        {
-            result = await _inner.GetAllAsync(filter);
-            _cache.Set(cacheKey, result, TimeSpan.FromMinutes(5));
-        }
-
-        return result;
+        //TODO Create cache logic for GetAllAsync with filtering pagination for fixed values
+        return await _inner.GetAllAsync(filter);
     }
 
     public async Task UpsertAsync(AssetEntity entity)
@@ -74,7 +64,8 @@ public class CacheAssetService : IAssetService
         _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
-    public Task<bool>        ExistsAsync(string  id) => _inner.ExistsAsync(id);
+    //TODO Implement cache logic for ExistsAsync if needed
+    public Task<bool> ExistsAsync(string id) => _inner.ExistsAsync(id);
 
 
     public async Task UpdateAsync(AssetEntity entity)
