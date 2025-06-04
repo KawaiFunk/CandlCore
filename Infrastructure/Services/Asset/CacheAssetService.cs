@@ -42,26 +42,22 @@ public class CacheAssetService : IAssetService
     {
         await _inner.UpsertAsync(entity);
         _cache.Remove(CacheKeyHelper.GetAssetByIdCacheKey(entity.Id.ToString()));
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
     public async Task AddAsync(AssetEntity entity)
     {
         await _inner.AddAsync(entity);
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
     public async Task AddRangeAsync(IEnumerable<AssetEntity> entities)
     {
         await _inner.AddRangeAsync(entities);
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
     public async Task DeleteAsync(string id)
     {
         await _inner.DeleteAsync(id);
         _cache.Remove(CacheKeyHelper.GetAssetByIdCacheKey(id));
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 
     //TODO Implement cache logic for ExistsAsync if needed
@@ -72,6 +68,5 @@ public class CacheAssetService : IAssetService
     {
         await _inner.UpdateAsync(entity);
         _cache.Remove(CacheKeyHelper.GetAssetByIdCacheKey(entity.Id.ToString()));
-        _cache.Remove(CacheKeyHelper.GetAllAssetsCacheKey());
     }
 }
